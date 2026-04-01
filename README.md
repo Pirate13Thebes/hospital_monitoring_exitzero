@@ -1,13 +1,14 @@
-Hospital Monitoring Scripts
-African Leadership College of Higher Education · BSE Year 1 · Trimester 2 · Group Lab
-Table of Contents
+🏥 Hospital Monitoring Scripts
+African Leadership College of Higher Education · BSE Year 1 · Trimester 2 · Group ExitZero
+A collaborative Bash scripting project that simulates a hospital heart-rate monitoring pipeline, including live patient monitoring, log archival, dashboard visualization, backup automation, and centralized process control.
+📚Table of Contents
 Team 
 Repository Structure
 Scripts
 Git Workflow
 Member Commentaries 
 
-Team
+👥 Team
 Member
 Role
 Task
@@ -30,7 +31,7 @@ End-to-end test + README.md + final push
 
 
 
-Repository Structure
+📁 Repository Structure
 hospital_monitoring_group1/
 +-- heart_rate_monitor.sh
 +-- archive_log.sh
@@ -40,7 +41,7 @@ hospital_monitoring_group1/
 +-- heart_rate_log.txt
 +-- README.md
 
-Scripts
+⚙️ Scripts
 heart_rate_monitor.sh
 Logs simulated heart rate data every second into heart_rate_log.txt. Runs in the background and displays its PID.
 chmod +x heart_rate_monitor.sh
@@ -66,6 +67,12 @@ Result: heart_rate_log.txt becomes heart_rate_log.txt_20250103_143510
 
 monitor_display.sh
 Live terminal dashboard that reads from heart_rate_log.txt and displays heart rate data in real time with color-coded status, BPM meter, trend graph, and alerts. Supports device filtering. Written by Chrys.
+🎨 Color-coded BPM status
+📊 Live BPM meter
+📈 Trend graph
+🚨 High/low heart-rate alerts
+🖥️ Clean terminal UI
+🔍 Device filtering support
 chmod +x monitor_display.sh
 ./monitor_display.sh
 Requires heart_rate_monitor.sh to be running first. Press Ctrl+C to exit cleanly.
@@ -80,7 +87,7 @@ Moves all archived log files into archived_logs_group1/ and backs them up to a r
 chmod +x backup_archives.sh
 ./backup_archives.sh
 
-Git Workflow
+🔀 Git Workflow
 # Clone the repo
 git clone https://github.com/<your-org>/hospital_monitoring_group1.git
 cd hospital_monitoring_group1
@@ -96,7 +103,7 @@ git commit -m "YourName: short description"
 git push origin main
 
 
-Commit messages from this repo:
+📝 Commit messages from this repo:
 Fanuel:  Final QA passed, README added
 Grace:   Add archive_log.sh -- timestamped log archival script
 Jacinta: Tested heart_rate_monitor.sh - live logging confirmed with tail -f
@@ -126,5 +133,12 @@ Fanuel: README and final QA
 Testing each script alone is not the same as testing the pipeline. The full end-to-end run was the only way to confirm the output of one script feeds correctly into the next. The most important check was verifying the archived filename matches heart_rate_log.txt_YYYYMMDD_HHMMSS exactly, not just that the file was renamed. Confirming heart_rate_log.txt no longer exists after archiving proves mv renamed the file rather than leaving a copy behind.
 I wrote this README as part of the final QA role because documentation is only reliable after everything has been tested. Each commentary is written from the author's own perspective so the grader can see that every member understands the reasoning behind their work, not just the commands.
  
-Group 1 · BSE Year 1 · ALCHE
-
+✅ Final Notes
+This project demonstrates:
+🐧 Bash scripting fundamentals
+🔁 Process management
+📂 File archival automation
+🔐 Secure remote backups
+📊 Real-time terminal dashboards
+🤝 Collaborative Git workflow
+🧪 QA and documentation discipline
