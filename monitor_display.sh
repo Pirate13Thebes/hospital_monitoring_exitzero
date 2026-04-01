@@ -4,6 +4,7 @@
 # Description: Live terminal dashboard for heart rate monitoring
 #              with alerts, stats, trends and device filter
 
+
 # Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -16,12 +17,15 @@ BOLD='\033[1m'
 BLINK='\033[5m'
 NC='\033[0m'
 
+
 LOG_FILE="heart_rate_log.txt"
 BPM_LOW=50
 BPM_HIGH=90
 
+
 # Feature 4 - Device filter
 read -p "Enter device name to monitor (or press Enter for ALL): " FILTER_DEVICE
+
 
 # Function to draw header
 draw_header() {
@@ -32,6 +36,7 @@ draw_header() {
     echo -e "${CYAN}╚══════════════════════════════════════════════════╝${NC}"
     echo ""
 }
+
 
 # Function to get heart rate status
 get_status() {
@@ -47,6 +52,7 @@ get_status() {
     fi
 }
 
+
 # Feature 2 - Alert system
 check_alert() {
     local bpm=$1
@@ -58,6 +64,7 @@ check_alert() {
         printf '\a'  # Beep
     fi
 }
+
 
 # Function to draw BPM bar
 draw_bar() {
@@ -78,10 +85,12 @@ draw_bar() {
     fi
 }
 
+
 # Feature 5 - ASCII trend graph
 draw_trend() {
     echo -e "${WHITE}  📈 BPM TREND (last 10 readings):${NC}"
     echo -e "${CYAN}  ──────────────────────────────────────────────────${NC}"
+
 
     local readings
     if [ -z "$FILTER_DEVICE" ]; then
@@ -89,6 +98,7 @@ draw_trend() {
     else
         readings=$(grep "$FILTER_DEVICE" "$LOG_FILE" | tail -10 | awk '{print $4}')
     fi
+
 
     local graph=""
     for bpm in $readings; do
@@ -108,6 +118,7 @@ draw_trend() {
     echo ""
 }
 
+
 # Check if log file exists
 if [ ! -f "$LOG_FILE" ]; then
     draw_header
@@ -115,9 +126,11 @@ if [ ! -f "$LOG_FILE" ]; then
     exit 1
 fi
 
+
 # Live display loop
 while true; do
     draw_header
+
 
     # Feature 4 - Apply device filter
     if [ -z "$FILTER_DEVICE" ]; then
@@ -132,11 +145,13 @@ while true; do
         echo ""
     fi
 
+
     # Latest readings table
     echo -e "${WHITE}  📋 LATEST READINGS:${NC}"
     echo -e "${CYAN}  ──────────────────────────────────────────────────${NC}"
     echo -e "${WHITE}  TIMESTAMP              DEVICE      BPM   STATUS${NC}"
     echo -e "${CYAN}  ──────────────────────────────────────────────────${NC}"
+
 
     echo "$DISPLAY_DATA" | while read -r t1 t2 device bpm; do
         status=$(get_status "$bpm")
@@ -144,13 +159,16 @@ while true; do
                "$t1" "$t2" "$device" "$bpm" "$status"
     done
 
+
     echo -e "${CYAN}  ──────────────────────────────────────────────────${NC}"
     echo ""
+
 
     # Get latest BPM stats
     latest_bpm=$(echo "$LATEST" | awk '{print $4}')
     latest_device=$(echo "$LATEST" | awk '{print $3}')
     latest_time=$(echo "$LATEST" | awk '{print $1, $2}')
+
 
     # Feature 1 - Blinking heart animation based on BPM
     if [ "$(($(date +%s) % 2))" -eq 0 ]; then
@@ -159,9 +177,11 @@ while true; do
         HEART="${WHITE}🤍${NC}"
     fi
 
+
     # Feature 3 - Min/Max BPM tracker
     MAX_BPM=$(echo "$ALL_DATA" | awk '{print $4}' | sort -n | tail -1)
     MIN_BPM=$(echo "$ALL_DATA" | awk '{print $4}' | sort -n | head -1)
+
 
     # Display live stats
     echo -e "${WHITE}  📊 LIVE STATS:${NC}"
@@ -174,16 +194,20 @@ while true; do
     echo -e "  ${WHITE}Min BPM  :${NC} ${BLUE}$MIN_BPM bpm${NC}"
     echo ""
 
+
     # BPM Meter
     echo -e "  ${WHITE}BPM METER:${NC}"
     draw_bar "$latest_bpm"
     echo ""
 
+
     # Feature 5 - Trend graph
     draw_trend
 
+
     # Feature 2 - Alert check
     check_alert "$latest_bpm"
+
 
     # Total readings
     total=$(echo "$ALL_DATA" | wc -l)
@@ -191,5 +215,9 @@ while true; do
     echo -e "${CYAN}  ──────────────────────────────────────────────────${NC}"
     echo -e "  ${YELLOW}Refreshing every second... Press Ctrl+C to exit${NC}"
 
+
     sleep 1
 done
+
+
+
