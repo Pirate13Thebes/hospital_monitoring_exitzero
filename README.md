@@ -113,7 +113,8 @@ Chrys:   Added hospital_control.sh, backup_archives.sh and monitor_display.sh
 Chrys:   Initial commit, repo setup
 
 # Member Commentaries
-Leslie: heart_rate_monitor.sh
+
+# Leslie: heart_rate_monitor.sh
 I wrapped the while loop inside ( ... ) & so it runs as a background process without locking the terminal. The & tells Linux to start it and return control immediately. $! is a special variable that holds the PID of the last background job, so I capture it right after launching and print it to the user. Without the PID there would be no way to stop the monitor later.
 For the heart rate I used $(( RANDOM % 60 + 40 )) to keep values in a realistic 40–99 bpm range. I used >> instead of > so every new line is appended to the log and nothing ever gets overwritten.
 
